@@ -5,7 +5,6 @@ require("dotenv").config();
 const server = require("express")();
 const cache = require("memory-cache");
 const debug = require("debug")("pay-test");
-const fixieRequest = request.defaults({'proxy': process.env.FIXIE_URL});
 
 // Importing LINE Pay API SDK
 const linePay = require("line-pay");
