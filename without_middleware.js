@@ -5,13 +5,15 @@ require("dotenv").config();
 const server = require("express")();
 const cache = require("memory-cache");
 const debug = require("debug")("pay-test");
+const fixieRequest = request.defaults({'proxy': process.env.FIXIE_URL});
 
 // Importing LINE Pay API SDK
 const linePay = require("line-pay");
 const pay = new linePay({
     channelId: process.env.LINE_PAY_CHANNEL_ID,
     channelSecret: process.env.LINE_PAY_CHANNEL_SECRET,
-    hostname: process.env.LINE_PAY_HOSTNAME
+    hostname: process.env.LINE_PAY_HOSTNAME,
+    isSandbox: true,
 });
 
 // Importing LINE Messaging API SDK
