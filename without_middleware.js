@@ -43,13 +43,13 @@ server.post("/webhook", lineBot.middleware(botConfig), (req, res, next) => {
 
             let message = {
                 type: "template",
-                altText: "You need to purchase subscription to use this Chatbot. It's 1yen/month. Do you want to puchase?",
+                altText: "定期購読が必要です. 1月は1円です. 加入しませんか?",
                 template: {
                     type: "confirm",
-                    text: "You need to purchase subscription to use this Chatbot. It's 1yen/month. Do you want to purchase?",
+                    text: "定期購読が必要です. 1月は1円です. 加入しませんか?",
                     actions: [
-                        {type: "postback", label: "Yes", data: "yes"},
-                        {type: "postback", label: "No Thanks", data: "no"}
+                        {type: "postback", label: "はい", data: "yes"},
+                        {type: "postback", label: "いいえ", data: "no"}
                     ]
                 }
             }
@@ -66,7 +66,7 @@ server.post("/webhook", lineBot.middleware(botConfig), (req, res, next) => {
             if (event.type == "postback"){
                 if (event.postback.data == "yes"){
                     let reservation = {
-                        productName: "My product",
+                        productName: "チャット商品",
                         amount: 1,
                         currency: "JPY",
                         confirmUrl: process.env.LINE_PAY_CONFIRM_URL || `https://${req.hostname}/pay/confirm`,
@@ -82,12 +82,12 @@ server.post("/webhook", lineBot.middleware(botConfig), (req, res, next) => {
 
                         let message = {
                             type: "template",
-                            altText: "Please proceed to the payment.",
+                            altText: "支払い表面へ",
                             template: {
                                 type: "buttons",
-                                text: "Please proceed to the payment.",
+                                text: "支払い表面へ",
                                 actions: [
-                                    {type: "uri", label: "Pay by LINE Pay", uri: response.info.paymentUrl.web},
+                                    {type: "uri", label: "LINE Payへ", uri: response.info.paymentUrl.web},
                                 ]
                             }
                         }
@@ -101,7 +101,7 @@ server.post("/webhook", lineBot.middleware(botConfig), (req, res, next) => {
 
                     let message = {
                         type: "text",
-                        text: "OK. Have a nice day."
+                        text: "わかりました！"
                     }
                     return bot.replyMessage(event.replyToken, message).then((response) => {
                         cache.del(event.source.userId);
@@ -148,7 +148,7 @@ server.get("/pay/confirm", (req, res, next) => {
             stickerId: 144
         },{
             type: "text",
-            text: "Congratulations! Now your chatbot is fully functional."
+            text: "おめでとうございます! チャットサービスをご利用できました！"
         }]
         return bot.pushMessage(reservation.userId, messages);
     }).then((response) => {
