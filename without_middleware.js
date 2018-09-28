@@ -43,10 +43,10 @@ server.post("/webhook", lineBot.middleware(botConfig), (req, res, next) => {
 
             let message = {
                 type: "template",
-                altText: "定期購読が必要です. 1月は1円です. 加入しませんか?",
+                altText: "このチャットボットの利用は１円/月の使用料が必要です。利用を希望しますか？",
                 template: {
                     type: "confirm",
-                    text: "定期購読が必要です. 1月は1円です. 加入しませんか?",
+                    text: "このチャットボットの利用は１円/月の使用料が必要です。利用を希望しますか？",
                     actions: [
                         {type: "postback", label: "はい", data: "yes"},
                         {type: "postback", label: "いいえ", data: "no"}
@@ -82,12 +82,12 @@ server.post("/webhook", lineBot.middleware(botConfig), (req, res, next) => {
 
                         let message = {
                             type: "template",
-                            altText: "支払い表面へ",
+                            altText: "支払いページへとお進み下さい",
                             template: {
                                 type: "buttons",
-                                text: "支払い表面へ",
+                                text: "支払いページへとお進み下さい",
                                 actions: [
-                                    {type: "uri", label: "LINE Payへ", uri: response.info.paymentUrl.web},
+                                    {type: "uri", label: "LINE Payによる支払い", uri: response.info.paymentUrl.web},
                                 ]
                             }
                         }
@@ -148,7 +148,7 @@ server.get("/pay/confirm", (req, res, next) => {
             stickerId: 144
         },{
             type: "text",
-            text: "おめでとうございます! チャットサービスをご利用できました！"
+            text: "支払いが完了しました！チャットボットの機能を利用することができます！"
         }]
         return bot.pushMessage(reservation.userId, messages);
     }).then((response) => {
