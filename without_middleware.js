@@ -158,7 +158,7 @@ server.get("/pay/confirm", (req, res, next) => {
 });
 
 function subscriptionTimer(userId) {
-    let message = [{
+    let messages = [{
         type: "text",
         text: "Your subscription has expired!"
     }]
