@@ -150,7 +150,7 @@ server.get("/pay/confirm", (req, res, next) => {
             type: "text",
             text: "支払いが完了しました！チャットボットの機能を利用することができます！"
         }]
-        setTimeout(subscriptionTimer, 60000, reservation.userId));
+        setTimeout(subscriptionTimer, 60000, reservation.userId);
         return bot.pushMessage(reservation.userId, messages);
     }).then((response) => {
         cache.put(reservation.userId, {subscription: "active"});
