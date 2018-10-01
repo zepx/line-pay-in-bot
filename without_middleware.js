@@ -161,9 +161,24 @@ function subscriptionTimer(userId) {
     let messages = [{
         type: "text",
         text: "Your subscription has expired! "
+    },{
+        type: "template",
+        altText: "継続しますか？",
+        template: {
+            type: "confirm",
+            text: "こ継続しますか？",
+            actions: [
+                {type: "postback", label: "はい", data: "yes"},
+                {type: "postback", label: "いいえ", data: "no"}
+            ]
+        }
     }]
     console.log("Subscription Expired: " + userId)
     //cache.put(userId, {subscription: "inactive"});
     cache.del(userId);
-    return bot.pushMessage(userId, messages);
+    return bot.pushMessage(userId, messages).then((response) => {
+        cache.put(userId, {
+            subscription: "inactive"
+        });
+    });
 }
