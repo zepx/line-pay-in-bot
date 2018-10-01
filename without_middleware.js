@@ -160,8 +160,9 @@ server.get("/pay/confirm", (req, res, next) => {
 function subscriptionTimer(userId) {
     let messages = [{
         type: "text",
-        text: "Your subscription has expired!"
+        text: "Your subscription has expired! " + userId
     }]
+    console.log("Subscription Expired: " + userId)
     cache.put(userId, {subscription: "inactive"});
     return bot.pushMessage(userId, messages);
 }
